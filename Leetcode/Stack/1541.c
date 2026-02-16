@@ -19,3 +19,24 @@ int minInsertions(char* s) {
     }
     return ops+need;
 }
+
+// first revision
+int minInsertions(char* s) {
+    int res=0, need=0;
+    for(int i=0; s[i] != '\0'; i++){
+        if(s[i] == '('){
+            if(need&1){
+                need--;
+                res++;
+            }
+            need += 2;
+        }else{
+            if(need <= 0){
+                need += 2;
+                res++;
+            }
+            need--;
+        }
+    }
+    return res+need;
+}

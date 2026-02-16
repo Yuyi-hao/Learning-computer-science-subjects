@@ -33,3 +33,36 @@ char* minRemoveToMakeValid(char* s) {
     res[res_idx] = '\0';
     return res;
 }
+
+
+// first revision
+#define MAX_LEN 100001
+char* minRemoveToMakeValid(char* s) {
+    int open_brakcets=0, close_brackets=0;
+    for(int i=0; s[i] != '\0'; i++){
+        if(s[i] == '(') open_brakcets++;
+        else if(s[i] == ')' && open_brakcets > close_brackets) close_brackets++;
+    }
+    int balanced = fmin(open_brakcets, close_brackets), used=0;
+    char *res = (char *)malloc(sizeof(char)*MAX_LEN);
+    int idx=-1;
+    for(int i=0; s[i] != '\0'; i++){
+        if(s[i] == '('){
+            if(balanced > 0 && balanced > used){
+                used++;
+                res[++idx] = s[i];
+            }
+        }else if(s[i] == ')'){
+            if(used > 0 && balanced > 0){
+                used--;
+                balanced--;
+                res[++idx] = s[i];
+            }
+        }else{
+            res[++idx] = s[i];
+        }
+    }
+    res[++idx] = '\0';
+    return res;
+
+}
